@@ -1,27 +1,71 @@
 // routes/users.js
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
-const addUser = require('../controllers/userController');
-const getUsers = require('../controllers/userController');
-const getUserbyId = require('../controllers/userController');
-const editUser = require('../controllers/userController');
-const deleteUser = require('../controllers/userController');
 
+const User = require('../models/User');
 
 // Create a new user
-router.post('/', addUser);
+router.post('/', async (req, res)=>{
+    try {
+      const newUser = new User(req.body);
+      await newUser.save();
+      res.status(201).json(newUser);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  });
 
 // Get all users
-router.get('/', getUsers);
+router.get('/', async (req,res)=>{
+    try {
+        const users = await User.find();
+        res.json(users);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+});
 
 // Get a specific user by ID
-router.get('/:userId',getUserbyId);
+router.get('/:userId',async (req,res)=>{
+    try {
+        const user = await User.findById(req.params.userId);
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(user);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+});
 
 // Update a user by ID
-router.put('/:userId', editUser);
+router.put('/:userId', async (req,res)=>{
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+          req.params.userId,
+          req.body,
+          { new: true }
+        );
+        if (!updatedUser) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(updatedUser);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+});
 
 // Delete a user by ID
-router.delete('/:userId',deleteUser);
+router.delete('/:userId',async (req,res)=>{
+    try {
+        const deletedUser = await User.findByIdAndDelete(req.params.userId);
+        if (!deletedUser) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ message: 'User deleted successfully' });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+});
 
 module.exports = router;
