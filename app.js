@@ -8,11 +8,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const demoDataRoutes=require('./routes/demoData');
 const dotenv = require("dotenv");
-
+var cors = require('cors')
 dotenv.config();
+
+
+const corsOptions = {
+  origin: '127.0.0.1:5500',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // enable set cookie with credentials
+  optionsSuccessStatus: 204, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 // Middleware
 app.use(bodyParser.json());
-
+app.use(cors());
 // MongoDB Connection
 // mongoose.connect('mongodb://localhost:27017/demoData', {
 //   useNewUrlParser: true,
