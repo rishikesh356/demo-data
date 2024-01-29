@@ -20,7 +20,7 @@ const corsOptions = {
 };
 // Middleware
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsOptions));
 // MongoDB Connection
 // mongoose.connect('mongodb://localhost:27017/demoData', {
 //   useNewUrlParser: true,
