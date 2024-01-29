@@ -21,11 +21,12 @@ router.get('/site', async (req,res)=>{try{
 catch(error){
   res.status(500).json({ error: error.message });
 }})
-router.post('/',upload.single('image'),async(req,res)=>{
+router.post('/',async(req,res)=>{
   try {
      const {url}=req.body;
       const { description } = req.body;
-      const imagePath = req.file.path;
+      //const imagePath = req.file.path;
+      const {imagePath}=req.body;
       let Sno=1;
       var exists = false;
       await DemoData.find({}).then(docs=>{
@@ -55,7 +56,8 @@ router.patch('/edit/site',upload.single('image'),async(req,res)=>{
 
     const url=req.query.url;
     const {description}=req.body;
-    const imagePath=req.file.path;
+    const imagePath = req.file.path;
+    //const imagePath=req.body;
     let Sno=0;
     await DemoData.find({url:url}).then(docs=>{
       docs.forEach(doc=>{
