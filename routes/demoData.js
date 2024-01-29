@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require("multer");
-const DemoData = require("../models/demoData");
+const DemoData = require("../models/DemoData");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
