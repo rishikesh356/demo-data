@@ -12,15 +12,15 @@ var cors = require('cors')
 dotenv.config();
 
 
-const corsOptions = {
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // enable set cookie with credentials
-  optionsSuccessStatus: 204, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
+// const corsOptions = {
+//   origin: '*',
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   credentials: true, // enable set cookie with credentials
+//   optionsSuccessStatus: 204, // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
 // Middleware
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+app.use(cors());
 // MongoDB Connection
 // mongoose.connect('mongodb://localhost:27017/demoData', {
 //   useNewUrlParser: true,
@@ -48,7 +48,7 @@ connectDB();
 
 
 // Define routes
-app.use('/upload',demoDataRoutes)
+app.use('https://guide-data.onrender.com/upload',demoDataRoutes)
 app.use('/users',userRoutes)
 // Start the server
 app.listen(PORT, () => {
