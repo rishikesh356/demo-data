@@ -3,16 +3,16 @@ const router = express.Router();
 const multer = require("multer");
 const DemoData = require("../models/DemoData");
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-      cb(null, Date.now() + '-' + file.originalname);
-    }
-  });
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//       cb(null, 'uploads/');
+//     },
+//     filename: (req, file, cb) => {
+//       cb(null, Date.now() + '-' + file.originalname);
+//     }
+//   });
   
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 router.get('/site', async (req,res)=>{try{
   const url = req.query.url;
   const demoData=await DemoData.find({url:url}).sort({Sno:'asc'});
@@ -51,13 +51,13 @@ router.post('/',async(req,res)=>{
       res.status(500).json({ error: 'Internal Server Error' });
     }
 })
-router.patch('/edit/site',upload.single('image'),async(req,res)=>{
+router.patch('/edit/site',async(req,res)=>{
   try{
 
     const url=req.query.url;
     const {description}=req.body;
-    const imagePath = req.file.path;
-    //const imagePath=req.body;
+    // const imagePath = req.file.path;
+    const {imagePath}=req.body;
     let Sno=0;
     await DemoData.find({url:url}).then(docs=>{
       docs.forEach(doc=>{
