@@ -48,7 +48,7 @@ connectDB();
 
 
 // Define routes
-app.use('https://guide-data.onrender.com/upload',demoDataRoutes)
+app.use('/upload',demoDataRoutes)
 app.use('/users',userRoutes)
 // Start the server
 app.listen(PORT, () => {
