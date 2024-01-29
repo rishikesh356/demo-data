@@ -13,7 +13,7 @@ dotenv.config();
 
 
 const corsOptions = {
-  origin: '127.0.0.1:5500',
+  origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // enable set cookie with credentials
   optionsSuccessStatus: 204, // some legacy browsers (IE11, various SmartTVs) choke on 204
